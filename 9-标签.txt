@@ -1,0 +1,6 @@
+1.命令
+列出所有的tag：git tag
+打轻量标签：git tag v1.0
+附注标签/查看tag信息：git tag -a v1.0 -m "v1.0 release"/git show v1.0
+删除本地标签/远程标签：git tag -d v1.0/git push origin --delete v1.0
+提交指定的tag/所有的tag：git push origin v1.0/git push origin --tags
