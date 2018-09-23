@@ -1,0 +1,91 @@
+1.git init   //将目录转化到git版本库
+git add    //将当前目录的已有文件添加到版本库中 git add read.txt
+git add .  //让Git将当前目录及其子目录下的所有文件都添加到版本库中
+三者区别
+git add -A  //提交所有变化
+git add -u  //提交被修改(modified)和被删除(deleted)文件，不包括新文件(new)
+git add .  //提交新文件(new)和被修改(modified)文件，不包括被删除(deleted)文件
+
+
+2.git查看比较不同版本文件
+git diff 比较的是工作区和暂存区的差别
+git diff --cached 比较的是暂存区和版本库的差别
+git diff HEAD 可以查看工作区和版本库的差别
+如果对文件内容进行了修改，会将其两个版本的内容显示出来，红色为历史版本，绿色为当前版本，当修改被提交后，就不会再有diff了。
+提交完成后会显示提示版本的修改信息，有几个插入，几个删除。
+
+3.查看日志
+git log  //显示提交记录，log记录我们的所有提交操作，提交记录里由四部分组成
+//commit：是一个由SHA1计算出来的非常大的数字，用十六进制表示，是此次操作的唯一标识符（每次commit的时候该值不会重复），我们可以通过它准确的找到此次提交操作，为恢复到该版本打下坚实的基础。
+//author: 提交该版本的作者以及该作者的邮箱
+//Date：提交的日期
+//日志消息：git commit -m的内容
+git log -4  //显示最后几次的提交日志
+git log --graph  //以界面的形式显示提交日志
+git log --pretty=oneline  //直接使用git log，会展示每次提交的详细的信息，但是当commit信息过多，亦或者我们不想要这么详细的信息的时候，此时我们就可以使用git log的另一种用法。
+git show //查看提交信息
+pretty format:
+A. 'oneline'  
+<sha1> <title line>  
+This is designed to be as compact as possible.
+
+B. 'short'
+commit <sha1>
+Author: <author>
+<title line>
+
+C.'medium'
+commit <sha1>
+Author: <author>
+Date:   <author date>
+<title line>
+<full commit message>
+
+D.'full'
+commit <sha1>
+Author: <author>
+Commit: <committer>
+<title line>
+<full commit message>
+
+E.'fuller'
+commit <sha1>
+Author:     <author>
+AuthorDate: <author date>
+Commit:     <committer>
+CommitDate: <committer date>
+<title line>
+<full commit message>
+
+F.'email'
+From <sha1> <date>
+From: <author>
+Date: <author date>
+Subject: [PATCH] <title line>
+<full commit message>
+
+G.'raw'
+The 'raw' format shows the entire commit exactly as stored in the commit object. Notably, the SHA-1s are displayed in full, regardless of whether --abbrev or --no-abbrev are used, and 'parents' information show the true parent commits, without taking grafts or history simplification into account. Note that this format affects the way commits are displayed, but not the way the diff is shown e.g. with git log --raw. To get full object names in a raw diff format, use --no-abbrev.
+
+4.版本回退   想要进行不同的版本切换，还需要用到git reset命令
+git reset --hard head^  //git reset是版本回退命令，--hard是回退命令的一个参数,HEAD代表的是当前版本，每加一个^就表示更前的一个版本
+git reset --hard head~2  //把HEAD^换成了HEAD~2，其中数字代表回退几个版本
+git reset --hard 1e7fac4  //还记得刚才git log中提到的commit吗，此时我们就是把HEAD换成了commit。正是由于commit字串的唯一性，我们才能快速准确的回退到我们需要的版本。
+如何填写字符串：这个字串至少是4位，也就是说我们至少需要取commit字串的前4位（4位以下会报错）。其实输入的这个字串是为了确保Git能够准确的找到对应的版本，如果版本中有前4位重复的，那么我们就需要多增加一位，确保Git不会找错了。那么多少位适合呢？如果使用Git时间久了，就会发现，很多操作使用到这个commit的时候都会把它缩略为前7位，因此，我们也可以沿用，使用前7位作为默认位数，当然，如果前7位仍不唯一，就需要输入前8位了。
+git reflog  //git reflog是Git提供给我们记录命令历史，commit和reset都在被记录之列,可以帮助我们回退到最初的版本。
+
+5.git cat-file 命令显示版本库对象的内容、类型及大小信息。
+object  //The name of the object to show. For a more complete list of ways to spell object names, see the “SPECIFYING REVISIONS” section in gitrevisions(7).
+-t   //Instead of the content, show the object type identified by object. 显示对象的类型。
+-s   //Instead of the content, show the object size identified by object. 显示对象的大小。
+-e   //Suppress all output; instead exit with zero status if object exists and is a valid object. 
+如果对象存在且有效，命令结束状态返回值为 0 。
+-p  //Pretty-print the contents of object based on its type. 根据对象的类型，以优雅的方式显式对象内容。
+示例：git cat-file -p head
+git cat-file -t head^
+git cat-file -s 3b18e512d
+
+6.git rev-parse //显示SHA1值
+git ls-files --stage  //显示暂存区中文件的SHA1值
+git checkout -- filename
+用暂存区中filename文件来覆盖工作区中的filename文件。相当于取消自上次执行git add filename以来（如果执行过）的本地修改。

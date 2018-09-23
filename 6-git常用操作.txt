@@ -1,0 +1,55 @@
+1.用户名和邮箱的操作
+查看用户名和邮箱地址：
+$ git config user.name
+$ git config user.email
+
+修改用户名和邮箱地址：
+$ git config --global user.name "username"
+$ git config --global user.email "email"
+
+2.免用户名和密码(两种方式)
+ A.可以在config中修改相应的远程仓库地址，来实现免用户名、密码操作。
+
+打开项目的.git/config文件， 修改如下配置：
+[remote "origin"]  
+    url = http://用户名:密码@gitlabxxxxxxx.git  
+    fetch = +refs/heads/*:refs/remotes/origin/*  
+将用户名、密码以“用户名:密码”的格式配置在仓库地址前面即可
+例如：http://zhimo1997:wuyuxiang1997@github.com/zhimo1997/Car.git
+
+
+B.在%HOME%目录中，一般为C:\users\Administrator，也可以是你自己创建的系统用户名目录，反正都在C:\users\中。文件名为.git-credentials,由于在Window中不允许直接创建以"."开头的文件，所以需要借助git bash进行，打开git bash客户端，进行%HOME%目录，然后用touch创建文件 .git-credentials, 用vim编辑此文件，输入内容格式：
+
+
+touch .git-credentials
+
+vim .git-credentials
+
+https://{zhimo1997}:{wuyuxiang1997}@github.com
+
+
+
+进入git bash终端， 输入如下命令：
+
+git config --global credential.helper store
+执行完后查看%HOME%目录下的.gitconfig文件，会多了一项：
+
+[credential]
+helper = store
+
+不同的设置类型：
+设置记住密码（默认15分钟）：
+
+git config --global credential.helper cache
+如果想自己设置时间，可以这样做：
+
+git config credential.helper 'cache --timeout=3600'
+这样就设置一个小时之后失效
+
+长期存储密码：
+
+git config --global credential.helper store
+增加远程地址的时候带上密码也是可以的。(推荐)
+
+两种方式的不同：第一种，对每一个新项目时，都需要更改其config文件，添加用户名和密码；而第二种，是将用户名和密码存储到本地，
+每个项目如果想免用户名和密码，只需要添加一句“免除”命令即可，且该命令可以控制时间，控制免除类型。

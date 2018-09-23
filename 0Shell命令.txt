@@ -1,0 +1,33 @@
+cat  //显示整个文件内容
+
+cd（change directory）命令：更换目录
+cd ~ : 切换到用户目录
+cd .. ：返回到上一层目录
+cd ../.. ：返回到上二层目录
+
+cp (copy)a.txt b.txt : 把文件a的内容复制到b文件
+cp a.txt ./test : 把文件a复制到text目录下
+cp -a test test2：递归的把目录test下所有文件（包括隐藏的文件）复制到新的目录 test2
+
+echo “hello world!” >> a.txt：添加内容到文件a里面
+cat <<EOF>> a.txt : (connect a text)可以添加多行语句到文件本身内容的末尾
+cat <<EOF> a.txt：添加内容到文件并覆盖到原始的内容
+
+echo "" > 1.txt  //向文件插入内容，替换之前所有内容
+
+find .  //查找目录下所有文件
+find library/metadata  //查找子目录下的文件
+
+ls(list)命令：列出文件
+ls -la 列出当前目录下的所有文件和文件夹
+ls a* 列出当前目录下所有以a字母开头的文件
+ls -l *.txt 列出当前目录下所有后缀名为txt的文件
+
+mv(move)命令：移动 重命名文件
+mv a.txt b.txt：文件a重新命名为b
+mv a.txt ./test：把文件移动到一个目录下
+
+mkdir  (make directory)创建目录,(即创建新文件夹）
+pwd  （print working directory）用于显示当前目录
+
+touch //新建一个不存在的文件

@@ -1,0 +1,42 @@
+1.Git添加本地项目出现fatal: unable to get credential storage lock: File exists
+
+把本地项目初始化之后上传到github上出现问题：fatal: unable to get credential storage lock: File exists
+
+解决办法：是因为我上传用的git帐号和我把github建项目的帐号不一致导致的
+
+2.error: failed to push some refs to 'git@github.com:....."
+解决方案：1、先拉下来，会自动合并的（不用操心）
+	git pull origin master
+	2、再上传 	git push -u origin master
+
+3.Git提交推送时报错
+
+Push failed
+            
+Failed with error: The remote end hung up unexpectedly
+            
+The remote end hung up unexpectedly
+            
+unable to rewind rpc post data - try increasing http.postBuffer
+            
+RPC failed; curl 56 OpenSSL SSL_read: SSL_ERROR_SYSCALL, errno 10053
+
+原因是Git默认限制推送的大小，运行命令更改限制大小即可
+
+
+//git config --global http.postBuffer 524288000
+git config http.postBuffer 524288000
+git config http.postBuffer 1048576000
+
+//git config --global http.postBuffer 1048576000
+
+在使用git推送项目时候出现 "fatal: The remote end hung up unexpectedly " 原因是推送的文件太大。
+解决方案：在克隆/创建版本库生成的 .git目录下面修改生成的config文件增加如下
+[http]
+postBuffer = 524288000
+1048576000
+
+git config -l 可以查询配置信息，看http.postBuffer项
+
+4.SSL失效
+git config --global http.sslVerify false

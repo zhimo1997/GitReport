@@ -1,0 +1,52 @@
+1.创建初始版本库
+例如在D:\Xpan\Unity Projects\Demo目录下创建一个空的版本库
+首先要找到该目录 cd "D:\Xpan\Unity Projects\Demo"  //目录的粘贴快捷键shift+insert
+创建 git init  //完成创建
+
+取消当前操作快捷键 ctrl+C
+
+2.将文件添加到版本库中
+git add main.unity  //
+git add .    //
+此时Git只是暂存了这些新添加的文件，add和commit两步是分开的。
+git status  //该命令可以显示中间添加的文件
+
+3.提交，完成的命令必须包括日志消息和作者(Vim编辑器)
+git commit 1.txt -m  //
+git commit  -m  //
+
+$ export git_version=vim  //设置一次即可覆盖，如果提交时没有-m选项，就会提交期间打开vim编辑器，写入完整日志信息
+vim编辑器的使用：进入vim之后，是处于[命令行模式（command mode）]，您要切换到[插入模式（Insert mode）]才能够输入文字，I键切换到插入，Esc键切换到命令行模式。
+用法：首先切换到插入模式，输入日志信息，然后切换到命令行模式，wq (输入:wq，存盘并退出vi)
+q! (输入q!， 不存盘强制退出vi) ；
+
+配置提交作者
+git config user.name "zhimo1997"
+git config email.name "185202204@qq.com"
+//只需要配置一次就会保存在配置文件中
+
+提交完成后使用git status命令，结果显示没有突出的、暂存的变更要提交
+
+errors:
+Another git process semms to be running in this repository, e.g. an editor opened by ‘git commit’. 
+解决方案：$rm .git/index.lock
+
+E325: ATTENTION
+Found a swap file by the name ".git/.COMMIT_EDITMSG.swp"
+解决方案：$rm .git/.COMMIT_EDITMSG.swp
+
+4.查看日志
+git log  //默认不用任何参数的话，git log 会按提交时间列出所有的更新，最近的更新排在最上面。
+git log -p -2  //我们常用 -p 选项展开显示每次提交的内容差异，用 -2 则仅显示最近的两次更新：
+
+5.查看提交差异
+git diff 版本全ID名\版本全ID名
+
+6.版本库文件的删除和重命名
+进入版本库后，可以用ls命令查看库内文件
+git rm 1.txt  //可以用来删除文件，删除只是暂存变更
+git commit -m "Remove a txt"  //需要再将变更提交给版本库
+
+git mv 1.txt read.txt  //将1.txt重命名为read.txt
+git commit -m "rename"
+//在任一情况下，暂存的变更必须随后进行提交
