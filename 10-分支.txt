@@ -10,3 +10,5 @@
 
 3.git clone
 网易内部：git clone ssh://git@g.hz.netease.com:22222/wuyuxiang02/InsightDemo.git
+
+4.从之前某个版本进行修改的时候一定要新建一个分支，不然可能会找不到自己修改的内容。
