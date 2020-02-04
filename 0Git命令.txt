@@ -89,5 +89,3 @@ git cat-file -s 3b18e512d
 git ls-files --stage  //显示暂存区中文件的SHA1值
 git checkout -- filename
 用暂存区中filename文件来覆盖工作区中的filename文件。相当于取消自上次执行git add filename以来（如果执行过）的本地修改。
-
-7.git grep " " 可以用该命令查找具体的文件内容
